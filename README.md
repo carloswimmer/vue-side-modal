@@ -1,6 +1,6 @@
-# retangulo
+# Vue-Side-Modal
 
-> A Vue.js project
+> A side bar component with modal behavior.
 
 ## Build Setup
 
