@@ -1,6 +1,6 @@
 <template>
   <div class="side" :id="identidade">
-    <div class="regua" :id="`regua${identidade}`"></div>
+    <slot></slot>
     <img src="@/assets/logo.png" style="margin: 40px">
     <input type="button" value="MAIS UM" class="btn btn-abre" 
       style="margin: 40px" @click="abreOutro ()" v-show="abreMaisUm">
@@ -58,8 +58,6 @@ export default {
       this.abre(id)
     },
     contrai (id, larg) {
-      // console.log(id +' , '+ larg)
-      // console.log('______________')
       document.querySelector('#' + id).style.width = this.largString (larg)
       this.$emit ('largura', larg)
     }
@@ -73,7 +71,6 @@ export default {
   mounted () {
     document.querySelector('#' + this.identidade).style.width = this.largString (this.largura)
     document.querySelector('#' + this.identidade).style.left = this.largCalc (this.largura)
-    document.querySelector('#regua' + this.identidade).style.width = this.largString (this.largura)
   }
 }
 </script>
