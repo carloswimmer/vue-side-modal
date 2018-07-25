@@ -1,11 +1,5 @@
 <template>
-  <div class="hello">
-    <div class="col-sm-12 casa">
-      <input type="button" value="ABRE" class="btn btn-abre" @click="abreSide(sides[0])">
-    </div>
-    <div class="col-sm-12 casa">
-      <input type="button" value="FECHA" class="btn btn-fecha" @click="fechaSide(sides[0])" disabled>
-    </div>
+  <div class="home">
     <side-modal v-for="side in sides" :key="side.id" 
       :largura="side.larg" 
       :identidade="side.id" 
@@ -27,7 +21,15 @@ export default {
   props: {
     sides: {
       required: true,
-      type: Array
+      type: Array,
+      default: [
+        {
+          larg: 600,
+          id: '',
+          abreProximo: false,
+          aberto: false
+        }
+      ]
     }
   },
   data () {
@@ -101,6 +103,9 @@ export default {
         this.comparaSidesFecha (side)
       }
     }
+  },
+  created () {
+    this.$parent.$on('abreHome', () => this.abreSide(this.sides[0]))
   }
 }
 </script>

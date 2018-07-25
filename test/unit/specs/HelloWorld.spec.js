@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import HelloWorld from '@/components/HelloWorld';
+import SideHome from '@/components/side-home';
 
-describe('HelloWorld.vue', () => {
+describe('side-home.vue', () => {
   it('should render correct contents', () => {
-    const Constructor = Vue.extend(HelloWorld);
+    const Constructor = Vue.extend(SideHome);
     const vm = new Constructor().$mount();
-    expect(vm.$el.querySelector('.hello h1').textContent)
+    expect(vm.$el.querySelector('.home h1').textContent)
       .toEqual('Welcome to Your Vue.js App');
   });
 });
