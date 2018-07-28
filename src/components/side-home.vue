@@ -89,11 +89,7 @@ export default {
       this.$emit ('mostra', side.id)
     },
     fechaSide (side) {
-      const index = this.sides.indexOf (side)
-      if ( index > 0) {
-        this.comparaSidesFecha (side)
-      }
-      side.aberto = false
+      this.fechaFromChild (side)
       this.$emit ('esconde', side)
     },
     fechaFromChild (side) {
@@ -105,7 +101,14 @@ export default {
     }
   },
   created () {
-    this.$parent.$on('abreHome', () => this.abreSide(this.sides[0]))
+    this.$parent.$on('abreHome', id => {
+      const index = this.sides.findIndex(item => item.id === id)
+      this.abreSide(this.sides[index])
+      })
+    this.$parent.$on('fechaHome', id => {
+      const index = this.sides.findIndex(item => item.id === id)
+      this.fechaSide(this.sides[index])
+      })
   }
 }
 </script>

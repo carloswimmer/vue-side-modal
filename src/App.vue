@@ -34,23 +34,31 @@ h1, h2 {
   border-radius: 10px;
   font-weight: bold;
 }
+.btn:hover {
+  color: rgba(255,255,255,0.6);
+  filter: brightness(1.15);
+  transition: 0.3s;
+}
 .btn-abre {
   color: aliceblue;
   background-color: darkorange;
-}
-.btn-abre:hover {
-  opacity: 0.8;
-  transition: 0.5s;
 }
 .btn-fecha {
   color: aliceblue;
   background-color: #666666;
 }
-.btn-fecha:hover {
-  opacity: 0.8;
-  transition: 0.5s;
-}
 .btn-fecha:disabled {
   opacity: 0.5;
+}
+.btn-x {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 48px;
+  margin-left: 50px;
+  width: auto;
+  height: auto;
+  padding: 0;
+  cursor: pointer;
 }
 </style>

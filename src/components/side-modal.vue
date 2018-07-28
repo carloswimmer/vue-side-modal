@@ -1,11 +1,10 @@
 <template>
   <div class="side" :id="identidade">
-    <slot></slot>
+    <div class="btn btn-x" @click="fecha (identidade)">&times;</div>
     <img src="@/assets/logo.png" style="margin: 40px">
+    <slot></slot>
     <input type="button" value="MAIS UM" class="btn btn-abre" 
       style="margin: 40px" @click="abreOutro ()" v-show="abreMaisUm">
-    <input type="button" value="FECHA" class="btn btn-fecha" 
-      @click="fecha (identidade)">
   </div>
 </template>
 
@@ -89,10 +88,5 @@ export default {
   background-color: cadetblue;
   box-shadow: 5px 2px 28px 0px rgba(0,0,0,0.55);
   transition: 2s;
-}
-.regua {
-  border: 1px solid darkorange;
-  width: 600px;
-  height: 5px;
 }
 </style>
