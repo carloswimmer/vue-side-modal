@@ -17,15 +17,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 h1, h2 {
   font-weight: normal;
-}
-.casa {
-  text-align: right;
-  padding-right: 20px;
-  margin-bottom: 20px;
 }
 .btn {
   width: 98px;
@@ -52,9 +46,9 @@ h1, h2 {
 }
 .btn-x {
   position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 48px;
+  top: 10px;
+  right: 20px;
+  font-size: 32px;
   margin-left: 50px;
   width: auto;
   height: auto;
