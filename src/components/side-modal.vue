@@ -1,7 +1,6 @@
 <template>
   <div class="side" :id="id">
     <div class="btn btn-x" @click="close (id)">&times;</div>
-    <img src="@/assets/logo.png" style="margin: 40px">
     <slot></slot>
     <input type="button" value="ANOTHER" class="btn btn-open" 
       style="margin: 40px" @click="openAnother ()" v-show="openOneMore">
@@ -76,6 +75,9 @@ export default {
 
 <style scoped>
 .side {
+  background-image: url('../assets/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
