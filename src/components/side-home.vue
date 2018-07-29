@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <side-modal v-for="side in sides" :key="side.id" 
-      :largura="side.larg" 
-      :identidade="side.id" 
-      :abreMaisUm="side.abreProximo"
-      @fechou="fechaFromChild(side)" 
-      @abreFromChild="abreSide(sides[sides.indexOf(side) + 1])" 
-      @largura="minima" >
-      <slot :name="side.id"></slot>
+    <side-modal v-for="side in sides" :key="side.identity" 
+      :divWidth="side.sideWidth" 
+      :id="side.identity" 
+      :openOneMore="side.openNext"
+      @fechou="closeFromChild(side)" 
+      @openFromChild="openSide(sides[sides.indexOf(side) + 1])" 
+      @divWidth="minima" >
+      <slot :name="side.identity"></slot>
     </side-modal>
   </div>
 </template>
@@ -24,90 +24,90 @@ export default {
       type: Array,
       default: [
         {
-          larg: 600,
-          id: '',
-          abreProximo: false,
-          aberto: false
+          sideWidth: 600,
+          identity: '',
+          openNext: false,
+          opened: false
         }
       ]
     }
   },
   data () {
     return {
-      largMinima: 0
+      sideWidthMinima: 0
     }
   },
   components: {
     'side-modal': SideModal
   },
   methods: {
-    minima(larg) {
-      this.largMinima = larg + 50
+    minima(sideWidth) {
+      this.sideWidthMinima = sideWidth + 50
     },
-    comparaSidesAbre (side) {
-      let largMinima = side.larg
-      let largAtual = 0
+    compareSidesOpen (side) {
+      let sideWidthMinima = side.sideWidth
+      let sideWidthAtual = 0
       
       this.sides.reverse ()
       this.sides.forEach (item => {
-        largAtual = document.querySelector('#' + item.id).clientWidth
-        if (item.aberto && largAtual <= largMinima) {
-          largMinima += 50
-          let prop = {id: item.id, larg: largMinima}
-          this.$emit('mostraMais', prop)
+        sideWidthAtual = document.querySelector('#' + item.identity).clientWidth
+        if (item.opened && sideWidthAtual <= sideWidthMinima) {
+          sideWidthMinima += 50
+          let prop = {id: item.identity, sideWidth: sideWidthMinima}
+          this.$emit('showMore', prop)
         }
       })
       this.sides.reverse() 
     },
-    comparaSidesFecha (side) {
-      let largAtual = 0
-      let largResult = 0
+    compareSidesClose (side) {
+      let sideWidthAtual = 0
+      let sideWidthResult = 0
 
-      let abertos = this.sides.filter (item => item.aberto === true)
-      abertos.reverse ()
-      this.$emit('escondeMais', abertos[0])
-      abertos.splice (0, 1)
+      let openeds = this.sides.filter (item => item.opened === true)
+      openeds.reverse ()
+      this.$emit('hideMore', openeds[0])
+      openeds.splice (0, 1)
 
-      abertos.forEach (item => {
-        largAtual = document.querySelector('#' + item.id).clientWidth
+      openeds.forEach (item => {
+        sideWidthAtual = document.querySelector('#' + item.identity).clientWidth
 
-        if (item.larg !== largAtual && item.larg < largAtual) {
-          this.largMinima > item.larg ? largResult = this.largMinima : largResult = item.larg
-          let prop = {id: item.id, larg: largResult}
-          this.$emit ('escondeMais', prop)
+        if (item.sideWidth !== sideWidthAtual && item.sideWidth < sideWidthAtual) {
+          this.sideWidthMinima > item.sideWidth ? sideWidthResult = this.sideWidthMinima : sideWidthResult = item.sideWidth
+          let prop = {id: item.identity, sideWidth: sideWidthResult}
+          this.$emit ('hideMore', prop)
         } else {
-          this.largMinima = item.larg + 50
+          this.sideWidthMinima = item.sideWidth + 50
         }
       })
     },
-    abreSide (side) {
+    openSide (side) {
       const index = this.sides.indexOf (side)
       if ( index > 0 ) {
-        this.comparaSidesAbre (side)
+        this.compareSidesOpen (side)
       }
-      side.aberto = true
-      this.$emit ('mostra', side.id)
+      side.opened = true
+      this.$emit ('show', side.identity)
     },
-    fechaSide (side) {
-      this.fechaFromChild (side)
-      this.$emit ('esconde', side)
+    closeSide (side) {
+      this.closeFromChild (side)
+      this.$emit ('hide', side)
     },
-    fechaFromChild (side) {
-      side.aberto = false
+    closeFromChild (side) {
+      side.opened = false
       const index = this.sides.indexOf (side)
       if ( index > 0) {
-        this.comparaSidesFecha (side)
+        this.compareSidesClose (side)
       }
     }
   },
   created () {
-    this.$parent.$on('abreHome', id => {
-      const index = this.sides.findIndex(item => item.id === id)
-      this.abreSide(this.sides[index])
+    this.$parent.$on('openHome', identity => {
+      const index = this.sides.findIndex(item => item.identity === identity)
+      this.openSide(this.sides[index])
       })
-    this.$parent.$on('fechaHome', id => {
-      const index = this.sides.findIndex(item => item.id === id)
-      this.fechaSide(this.sides[index])
+    this.$parent.$on('closeHome', identity => {
+      const index = this.sides.findIndex(item => item.identity === identity)
+      this.closeSide(this.sides[index])
       })
   }
 }

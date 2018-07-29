@@ -1,24 +1,24 @@
 <template>
   <div>
     <div class="col-sm-12 casa">
-      <input type="button" value="ABRE" class="btn btn-abre" @click="abre('quadrado')">
+      <input type="button" value="OPEN" class="btn btn-open" @click="open('square')">
     </div>
     <side-home :sides="navs">
-      <template :slot="navs[0].id">
-        <!-- Aqui vai o conteúdo do modal -->
-        <h1>Side-Nav Quadrado</h1>
+      <template :slot="navs[0].identity">
+        <!-- Here comes modal content -->
+        <h1>Side-Nav Square</h1>
         <div>
-          <input type="button" value="ABRE" class="btn btn-abre" @click="abre('circulo')">
+          <input type="button" value="OPEN" class="btn btn-open" @click="open('circle')">
         </div>
         <div style="margin-top: 20px">
-          <input type="button" value="FECHA" class="btn btn-fecha" @click="fecha('quadrado')">
+          <input type="button" value="CLOSE" class="btn btn-close" @click="close('square')">
         </div>
       </template>
-      <template :slot="navs[1].id">
-        <!-- Aqui vai o conteúdo do modal -->
-        <h1>Side-Nav Círculo</h1>
+      <template :slot="navs[1].identity">
+        <!-- Here comes modal content -->
+        <h1>Side-Nav Circle</h1>
         <div>
-          <input type="button" value="FECHA" class="btn btn-fecha" @click="fecha('circulo')">
+          <input type="button" value="CLOSE" class="btn btn-close" @click="close('circle')">
         </div>
       </template>
     </side-home>
@@ -35,26 +35,26 @@ export default {
     return {
       navs: [
         {
-          larg: 400,
-          id: 'quadrado',
-          abreProximo: false,
-          aberto: false
+          sideWidth: 400,
+          identity: 'square',
+          openNext: false,
+          opened: false
         },
         {
-          larg: 600,
-          id: 'circulo',
-          abreProximo: false,
-          aberto: false
+          sideWidth: 600,
+          identity: 'circle',
+          openNext: false,
+          opened: false
         },
       ]
     }
   },
   methods: {
-    abre (id) {
-      this.$emit('abreHome', id)
+    open (identity) {
+      this.$emit('openHome', identity)
     },
-    fecha (id) {
-      this.$emit('fechaHome', id)
+    close (identity) {
+      this.$emit('closeHome', identity)
     }
   },
   components: {

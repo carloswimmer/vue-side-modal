@@ -39,15 +39,15 @@ h1, h2 {
   filter: brightness(1.15);
   transition: 0.3s;
 }
-.btn-abre {
+.btn-open {
   color: aliceblue;
   background-color: darkorange;
 }
-.btn-fecha {
+.btn-close {
   color: aliceblue;
   background-color: #666666;
 }
-.btn-fecha:disabled {
+.btn-close:disabled {
   opacity: 0.5;
 }
 .btn-x {

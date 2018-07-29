@@ -1,10 +1,10 @@
 <template>
-  <div class="side" :id="identidade">
-    <div class="btn btn-x" @click="fecha (identidade)">&times;</div>
+  <div class="side" :id="id">
+    <div class="btn btn-x" @click="close (id)">&times;</div>
     <img src="@/assets/logo.png" style="margin: 40px">
     <slot></slot>
-    <input type="button" value="MAIS UM" class="btn btn-abre" 
-      style="margin: 40px" @click="abreOutro ()" v-show="abreMaisUm">
+    <input type="button" value="ANOTHER" class="btn btn-open" 
+      style="margin: 40px" @click="openAnother ()" v-show="openOneMore">
   </div>
 </template>
 
@@ -13,63 +13,63 @@ export default {
   name: 'SideModal',
 
   props: {
-    largura: {
+    divWidth: {
       required: false,
       type: Number,
       value: 600
     },
-    identidade: {
+    id: {
       required: true,
       type: String,
       value: ''
     },
-    abreMaisUm: {
+    openOneMore: {
       required: false,
       type: Boolean,
       value: false
     }
   },
   methods: {
-    largString (larg) {
-      return larg + 'px'
+    sideWidthString (sideWidth) {
+      return sideWidth + 'px'
     },
-    largCalc (larg) {
-    // soma para esconder o box-shadow
-    const calc = larg + 30
+    sideWidthCalc (sideWidth) {
+    // Calculate to hide box-shadow
+    const calc = sideWidth + 30
     return '-' + calc + 'px'
     },
-    abre (id) {
+    open (id) {
       document.querySelector('#' + id).style.left = '0px'
     },
-    abreOutro () {
-      this.$emit('abreFromChild')
+    openAnother () {
+      this.$emit('openFromChild')
     },
-    fecha (id) {
-      document.querySelector('#' + id).style.width = this.largString (this.largura)
-      document.querySelector('#' + id).style.left = this.largCalc (this.largura)
+    close (id) {
+      document.querySelector('#' + id).style.width = this.sideWidthString (this.divWidth)
+      document.querySelector('#' + id).style.left = this.sideWidthCalc (this.divWidth)
       this.$emit('fechou')
     },
-    fechaFromParent (id, larg) {
-      document.querySelector('#' + id).style.left = this.largCalc (larg)
+    closeFromParent (id, sideWidth) {
+      document.querySelector('#' + id).style.left = this.sideWidthCalc (sideWidth)
     },
-    expande (id, larg) {
-      document.querySelector('#' + id).style.width = this.largString (larg)
-      this.abre(id)
+    expand (id, sideWidth) {
+      document.querySelector('#' + id).style.width = this.sideWidthString (sideWidth)
+      this.open(id)
     },
-    contrai (id, larg) {
-      document.querySelector('#' + id).style.width = this.largString (larg)
-      this.$emit ('largura', larg)
+    contract (id, sideWidth) {
+      document.querySelector('#' + id).style.width = this.sideWidthString (sideWidth)
+      this.$emit ('divWidth', sideWidth)
     }
   },
   created () {
-	  this.$parent.$on ('mostra', id => this.abre(id))
-	  this.$parent.$on ('esconde', prop => this.fechaFromParent(prop.id, prop.larg))
-	  this.$parent.$on ('mostraMais', prop => this.expande(prop.id, prop.larg))
-	  this.$parent.$on ('escondeMais', prop => this.contrai(prop.id, prop.larg))
+	  this.$parent.$on ('show', id => this.open(id))
+	  this.$parent.$on ('hide', prop => this.closeFromParent(prop.identity, prop.sideWidth))
+	  this.$parent.$on ('showMore', prop => this.expand(prop.id, prop.sideWidth))
+	  this.$parent.$on ('hideMore', prop => this.contract(prop.identity, prop.sideWidth))
   },
   mounted () {
-    document.querySelector('#' + this.identidade).style.width = this.largString (this.largura)
-    document.querySelector('#' + this.identidade).style.left = this.largCalc (this.largura)
+    document.querySelector('#' + this.id).style.width = this.sideWidthString (this.divWidth)
+    document.querySelector('#' + this.id).style.left = this.sideWidthCalc (this.divWidth)
   }
 }
 </script>
